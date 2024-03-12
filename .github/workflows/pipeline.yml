@@ -1,0 +1,29 @@
+name: Pipeline
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Brent-Tunnicliff/setup_android_pipeline_action@1.0.0
+      - name: Build
+        run: ./gradlew build
+      - name: Run tests
+        run: ./gradlew test
+      - name: Build apk debug
+        run: ./gradlew assembleDebug
+      - name: Upload APK Debug
+        uses: actions/upload-artifact@v3
+        with:
+          name: Debug apk
+          path: app/build/outputs/apk/debug/
+      - name: Build apk release (unsigned)
+        run: ./gradlew assembleRelease
+      - name: Upload APK Release
+        uses: actions/upload-artifact@v3
+        with:
+          name: Release APK (unsigned)
+          path: app/build/outputs/apk/release/
