@@ -1,4 +1,4 @@
-package dev.tunnicliff.replace_me.ui.theme
+package dev.tunnicliff.dadjokes.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

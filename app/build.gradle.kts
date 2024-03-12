@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.tunnicliff.replace_me"
+    namespace = "dev.tunnicliff.dadjokes"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "dev.tunnicliff.replace_me"
+        applicationId = "dev.tunnicliff.dadjokes"
         minSdk = 33
         targetSdk = 34
         versionCode = 1

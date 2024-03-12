@@ -1,4 +1,4 @@
-package dev.tunnicliff.replace_me
+package dev.tunnicliff.dadjokes
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
