@@ -1,3 +1,5 @@
+<!-- Copyright © 2024 Brent Tunnicliff <brent@tunnicliff.dev> -->
+
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.dadjokes" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
