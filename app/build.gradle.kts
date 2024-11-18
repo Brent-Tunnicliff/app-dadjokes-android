@@ -1,22 +1,23 @@
 // Copyright © 2024 Brent Tunnicliff <brent@tunnicliff.dev>
 
 plugins {
-    id("androidx.room")
-    id("com.android.application")
-    id("com.google.devtools.ksp")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
+    alias(libs.plugins.serialization)
 }
 
 android {
     namespace = "dev.tunnicliff.dadjokes"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "dev.tunnicliff.dadjokes"
         minSdk = 33
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -44,11 +45,12 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
 
     packaging {
@@ -63,38 +65,41 @@ room {
 }
 
 dependencies {
-    implementation("androidx.activity:activity-compose:1.9.2")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation(platform("androidx.compose:compose-bom:2024.09.00"))
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5")
-    implementation("androidx.paging:paging-compose:3.3.2")
-    implementation("androidx.paging:paging-runtime-ktx:3.3.2")
-    implementation("androidx.room:room-ktx:2.6.1")
-    implementation("androidx.room:room-paging:2.6.1")
-    implementation("com.github.Brent-Tunnicliff:lib-container-android:1.0.0-beta.1")
-    implementation("com.github.Brent-Tunnicliff:lib-network-android:0.1.0-alpha.6")
-    implementation("com.github.Brent-Tunnicliff:lib-ui-android:0.1.0-alpha.2")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("com.google.code.gson:gson:2.11.0")
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.appcompat)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.paging.compose)
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+    implementation(libs.dev.tunnicliff.lib.container.android)
+    implementation(libs.dev.tunnicliff.lib.logging.android)
+    implementation(libs.dev.tunnicliff.lib.network.android)
+    implementation(libs.dev.tunnicliff.lib.ui.android)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.material)
 
-    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    annotationProcessor(libs.androidx.room.compiler)
 
-    ksp("androidx.room:room-compiler:2.6.1")
+    ksp(libs.androidx.room.compiler)
 
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.0")
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    testImplementation("androidx.room:room-testing:2.6.1")
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(libs.androidx.room.testing)
+    testImplementation(libs.junit)
 
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.09.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.androidx.test.ext.junit)
 }

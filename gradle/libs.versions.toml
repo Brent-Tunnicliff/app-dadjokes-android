@@ -1,0 +1,67 @@
+[versions]
+activityCompose = "1.9.3"
+androidGradlePlugin = "8.7.2"
+appcompat = "1.7.0"
+composeBom = "2024.11.00"
+coreKtx = "1.15.0"
+datastoreCoreAndroid = "1.1.1"
+espressoCore = "3.6.1"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+kotlinAndroid = "1.9.22"
+kotlinxSerializationJson = "1.6.3" # Version tied directly to kotlin version, limitign updates.
+ksp = "1.9.22-1.0.17"
+libContainerAndroid = "1.0.0-beta.2"
+libLoggingAndroid = "1.0.0-beta.6"
+libNetworkAndroid = "0.1.0-alpha.8"
+libUiAndroid = "0.1.0-alpha.8"
+lifecycleRuntimeKtx = "2.8.7"
+material = "1.12.0"
+pagingCompose = "3.3.4"
+pagingRuntimeKtx = "3.3.4"
+navigationCompose = "2.8.4"
+roomCompiler = "2.6.1"
+roomKtx = "2.6.1"
+roomPaging = "2.6.1"
+roomPlugin = "2.6.1"
+roomTesting = "2.6.1"
+uiTestManifest = "1.7.5"
+
+[libraries]
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui" }
+androidx-compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "uiTestManifest" }
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastoreCoreAndroid" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomPaging" }
+androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "roomTesting" }
+androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
+dev-tunnicliff-lib-container-android = { module = "dev.tunnicliff:lib-container-android", version.ref = "libContainerAndroid" }
+dev-tunnicliff-lib-logging-android = { module = "dev.tunnicliff:lib-logging-android", version.ref = "libLoggingAndroid" }
+dev-tunnicliff-lib-network-android = { module = "dev.tunnicliff:lib-network-android", version.ref = "libNetworkAndroid" }
+dev-tunnicliff-lib-ui-android = { module = "dev.tunnicliff:lib-ui-android", version.ref = "libUiAndroid" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+junit = { module = "junit:junit", version.ref = "junit" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAndroid" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+room = { id = "androidx.room", version.ref = "roomPlugin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinAndroid" }

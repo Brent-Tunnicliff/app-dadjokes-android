@@ -5,44 +5,28 @@ package dev.tunnicliff.dadjokes
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import dev.tunnicliff.dadjokes.ui.theme.AppTheme
+import dev.tunnicliff.dadjokes.ui.MainView
+import dev.tunnicliff.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
+//            App()
+
             AppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Message()
+                Scaffold { innerPadding ->
+                    Box(modifier = Modifier.padding(innerPadding)) {
+                        MainView()
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Message(modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello world",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AppTheme {
-        Message()
     }
 }
