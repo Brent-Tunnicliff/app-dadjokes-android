@@ -6,13 +6,33 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import dev.tunnicliff.dadjokes.AppContainer
 import dev.tunnicliff.dadjokes.ui.helper.LifecycleObserver
 import dev.tunnicliff.ui.theme.PreviewerTheme
 import dev.tunnicliff.ui.theme.ThemedPreviewer
 
+// region Navigation
+
+private const val ROUTE = "MainView"
+const val START_DESTINATION = ROUTE
+
+fun NavGraphBuilder.mainView() {
+    composable(route = ROUTE) {
+        MainView()
+    }
+}
+
+fun NavController.navigateToMainView() {
+    navigate(ROUTE)
+}
+
+// endregion
+
 @Composable
-fun MainView(
+private fun MainView(
     viewModel: MainViewModel = viewModel(factory = AppContainer.ViewModelFactory)
 ) {
     LifecycleObserver(onCreate = { viewModel.viewCreated() })

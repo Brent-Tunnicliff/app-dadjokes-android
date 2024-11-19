@@ -19,6 +19,12 @@ android {
         versionCode = 1
         versionName = "1.0.0"
 
+        buildConfigField(
+            "String",
+            "REPO_LINK",
+            "\"https://github.com/Brent-Tunnicliff/app-dadjokes-android\""
+        )
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true

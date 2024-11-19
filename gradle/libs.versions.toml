@@ -5,16 +5,16 @@ appcompat = "1.7.0"
 composeBom = "2024.11.00"
 coreKtx = "1.15.0"
 datastoreCoreAndroid = "1.1.1"
+devTunnicliffLibContainerAndroid = "1.0.0-beta.2"
+devTunnicliffLibLoggingAndroid = "1.0.0-beta.7"
+devTunnicliffLibNetworkAndroid = "0.1.0-alpha.8"
+devTunnicliffLibUiAndroid = "0.1.0-alpha.8"
 espressoCore = "3.6.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 kotlinAndroid = "1.9.22"
 kotlinxSerializationJson = "1.6.3" # Version tied directly to kotlin version, limitign updates.
 ksp = "1.9.22-1.0.17"
-libContainerAndroid = "1.0.0-beta.2"
-libLoggingAndroid = "1.0.0-beta.6"
-libNetworkAndroid = "0.1.0-alpha.8"
-libUiAndroid = "0.1.0-alpha.8"
 lifecycleRuntimeKtx = "2.8.7"
 material = "1.12.0"
 pagingCompose = "3.3.4"
@@ -51,10 +51,10 @@ androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "ro
 androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "roomTesting" }
 androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
-dev-tunnicliff-lib-container-android = { module = "dev.tunnicliff:lib-container-android", version.ref = "libContainerAndroid" }
-dev-tunnicliff-lib-logging-android = { module = "dev.tunnicliff:lib-logging-android", version.ref = "libLoggingAndroid" }
-dev-tunnicliff-lib-network-android = { module = "dev.tunnicliff:lib-network-android", version.ref = "libNetworkAndroid" }
-dev-tunnicliff-lib-ui-android = { module = "dev.tunnicliff:lib-ui-android", version.ref = "libUiAndroid" }
+dev-tunnicliff-lib-container-android = { module = "dev.tunnicliff:lib-container-android", version.ref = "devTunnicliffLibContainerAndroid" }
+dev-tunnicliff-lib-logging-android = { module = "dev.tunnicliff:lib-logging-android", version.ref = "devTunnicliffLibLoggingAndroid" }
+dev-tunnicliff-lib-network-android = { module = "dev.tunnicliff:lib-network-android", version.ref = "devTunnicliffLibNetworkAndroid" }
+dev-tunnicliff-lib-ui-android = { module = "dev.tunnicliff:lib-ui-android", version.ref = "devTunnicliffLibUiAndroid" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 junit = { module = "junit:junit", version.ref = "junit" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
