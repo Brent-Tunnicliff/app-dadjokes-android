@@ -4,6 +4,7 @@ package dev.tunnicliff.dadjokes
 
 import android.app.Application
 import android.content.Context
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -11,7 +12,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class MainApplication : Application() {
-    private val container = AppContainer(
+    val container = AppContainer(
         object : AppContainer.Dependencies {
             override fun applicationContext(): Context =
                 this@MainApplication.applicationContext
@@ -35,3 +36,6 @@ class MainApplication : Application() {
         applicationScope.cancel()
     }
 }
+
+val Context.viewModelFactory: ViewModelProvider.Factory
+    get() = (applicationContext as MainApplication).container.viewModelFactory()

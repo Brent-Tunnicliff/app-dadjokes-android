@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Locale
+import java.util.UUID
 
 @Entity
 data class DayEntity(
@@ -15,10 +17,18 @@ data class DayEntity(
     val jokeId: String,
     val viewed: Boolean
 ) {
-    private companion object {
-        val formatter: DateTimeFormatter = DateTimeFormatter
+    companion object {
+        private val formatter: DateTimeFormatter = DateTimeFormatter
             .ofPattern("yyyy-MM-dd")
+            .withLocale(Locale.ENGLISH)
             .withZone(ZoneId.systemDefault())
+
+        fun mock(
+            date: String = "2024-01-01",
+            jokeId: String = UUID.randomUUID().toString(),
+            viewed: Boolean = false
+        ): DayEntity =
+            DayEntity(date = date, jokeId = jokeId, viewed = viewed)
     }
 
     constructor(instant: Instant, jokeId: String) : this(

@@ -12,4 +12,12 @@ data class DayWithJoke(
         entityColumn = "id"
     )
     val joke: JokeEntity
-)
+) {
+    companion object {
+        fun mock(
+            day: DayEntity = DayEntity.mock(),
+            joke: JokeEntity = JokeEntity.mock()
+        ): DayWithJoke =
+            DayWithJoke(day = day, joke = joke)
+    }
+}

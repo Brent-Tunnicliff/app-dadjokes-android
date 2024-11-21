@@ -11,13 +11,17 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import dev.tunnicliff.container.Container
 import dev.tunnicliff.dadjokes.data.DayWithJokeRemoteMediator
 import dev.tunnicliff.dadjokes.data.database.JokeDatabase
+import dev.tunnicliff.dadjokes.data.database.entity.DayWithJoke
 import dev.tunnicliff.dadjokes.data.network.JokeRestService
 import dev.tunnicliff.dadjokes.data.network.JokeRestServiceImpl
-import dev.tunnicliff.dadjokes.ui.DefaultMainViewModel
-import dev.tunnicliff.dadjokes.ui.MainViewModel
+import dev.tunnicliff.dadjokes.ui.DefaultJokeViewModel
+import dev.tunnicliff.dadjokes.ui.JokeViewModel
 import dev.tunnicliff.logging.LOG
 import dev.tunnicliff.logging.LoggingContainer
 import dev.tunnicliff.logging.logger.LogUploadHandler
@@ -27,27 +31,19 @@ import dev.tunnicliff.network.NetworkContainer
 import java.net.URL
 import kotlin.reflect.KClass
 
-
 class AppContainer(
     private val dependencies: Dependencies
 ) : Container() {
     private companion object {
         const val TAG = "AppContainer"
+        const val BASE_URL = "https://icanhazdadjoke.com"
+        const val PAGE_SIZE = 7
     }
 
     // region Types
 
     interface Dependencies {
         fun applicationContext(): Context
-    }
-
-    object ViewModelFactory : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T =
-            when (modelClass) {
-                MainViewModel::class -> DefaultMainViewModel() as T
-                else -> throw Exception("Unable to resolve view model of type $modelClass")
-            }
     }
 
     // endregion
@@ -82,13 +78,20 @@ class AppContainer(
     fun loggingConfigurationManager(): LoggingConfigurationManager =
         loggingContainer.loggingConfigurationManager()
 
+    fun viewModelFactory(): ViewModelProvider.Factory = resolveSingleton {
+        object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T =
+                when (modelClass) {
+                    JokeViewModel::class -> DefaultJokeViewModel(jokePager()) as T
+                    else -> throw Exception("Unable to resolve view model of type $modelClass")
+                }
+        }
+    }
+
     // endregion
 
     // region Private
-
-    private fun jokeDatabase(): JokeDatabase = resolveSingleton {
-        JokeDatabase.new(dependencies.applicationContext())
-    }
 
     private fun dayWithJokeRemoteMediator(): DayWithJokeRemoteMediator = resolveWeak {
         DayWithJokeRemoteMediator(
@@ -98,11 +101,22 @@ class AppContainer(
         )
     }
 
+    private fun jokeDatabase(): JokeDatabase = resolveSingleton {
+        JokeDatabase.new(dependencies.applicationContext())
+    }
+
+    @OptIn(ExperimentalPagingApi::class)
+    private fun jokePager(): Pager<Int, DayWithJoke> =
+        Pager(
+            PagingConfig(pageSize = PAGE_SIZE),
+            remoteMediator = dayWithJokeRemoteMediator()
+        ) {
+            jokeDatabase().jokeDao().pagingSource()
+        }
+
     private fun jokeRestService(): JokeRestService = resolveWeak {
         JokeRestServiceImpl(
-            restService = networkContainer.restService(
-                URL(JokeRestServiceImpl.BASE_URL)
-            )
+            restService = networkContainer.restService(baseURL = URL(BASE_URL))
         )
     }
 
@@ -114,8 +128,8 @@ class AppContainer(
                 message: String,
                 throwable: Throwable?
             ): Boolean {
-                println("Uploading log, level:$level, tag:$tag, message:$message, throwable:$throwable")
-                return true
+                // TODO: implement the log uploading.
+                return false
             }
         }
     }

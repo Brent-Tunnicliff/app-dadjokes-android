@@ -13,12 +13,13 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import dev.tunnicliff.dadjokes.data.database.JokeDatabase
 import dev.tunnicliff.dadjokes.data.database.entity.DayEntity
-import dev.tunnicliff.dadjokes.data.database.entity.JokeEntity
+import dev.tunnicliff.dadjokes.data.database.entity.DayWithJoke
 import dev.tunnicliff.dadjokes.data.network.JokePageDTO
 import dev.tunnicliff.dadjokes.data.network.JokeRestService
 import dev.tunnicliff.logging.LOG
 import dev.tunnicliff.network.HttpException
-import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import java.io.IOException
 import java.time.Instant
 
@@ -28,10 +29,10 @@ class DayWithJokeRemoteMediator(
     private val jokeDatabase: JokeDatabase,
     private val jokeRestService: JokeRestService,
     private val dataStore: DataStore<Preferences>
-) : RemoteMediator<Int, JokeEntity>() {
+) : RemoteMediator<Int, DayWithJoke>() {
     private companion object {
         const val TAG = "DayWithJokeRemoteMediator"
-        const val START_DATE = "2024-11-01"
+        const val START_DATE = "2024-11-01T00:00:00.00Z"
         const val SECONDS_IN_MINUTE: Long = 60
         const val SECONDS_IN_HOUR: Long = 60 * SECONDS_IN_MINUTE
         const val SECONDS_IN_DAY: Long = 24 * SECONDS_IN_HOUR
@@ -44,7 +45,7 @@ class DayWithJokeRemoteMediator(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, JokeEntity>
+        state: PagingState<Int, DayWithJoke>
     ): MediatorResult =
         try {
             val result = when (loadType) {
@@ -62,8 +63,8 @@ class DayWithJokeRemoteMediator(
             MediatorResult.Error(exception)
         }
 
-    private suspend fun loadNextPage(state: PagingState<Int, JokeEntity>): MediatorResult {
-        val page = (state.lastItemOrNull()?.page ?: 0) + 1
+    private suspend fun loadNextPage(state: PagingState<Int, DayWithJoke>): MediatorResult {
+        val page = (state.lastItemOrNull()?.joke?.page ?: 0) + 1
         val limit = state.config.pageSize
         val totalPages = getStoredTotalPages()
         if (page < getStoredTotalPages() || totalPages == 0) {
@@ -84,8 +85,8 @@ class DayWithJokeRemoteMediator(
         )
     }
 
-    private suspend fun loadPreviousPage(state: PagingState<Int, JokeEntity>): MediatorResult {
-        val pageNumber = (state.firstItemOrNull()?.page ?: 0) - 1
+    private suspend fun loadPreviousPage(state: PagingState<Int, DayWithJoke>): MediatorResult {
+        val pageNumber = (state.firstItemOrNull()?.joke?.page ?: 0) - 1
         val limit = state.config.pageSize
 
         if (pageNumber < 1) {
@@ -162,10 +163,10 @@ class DayWithJokeRemoteMediator(
     }
 
     private suspend fun getStoredTotalJokes(): Int =
-        dataStore.data.lastOrNull()?.get(PREFERENCE_TOTAL_JOKES) ?: 0
+        dataStore.data.map { it[PREFERENCE_TOTAL_JOKES] ?: 0 }.first()
 
     private suspend fun getStoredTotalPages(): Int =
-        dataStore.data.lastOrNull()?.get(PREFERENCE_TOTAL_PAGES) ?: 0
+        dataStore.data.map { it[PREFERENCE_TOTAL_PAGES] ?: 0 }.first()
 
     /**
      * Get the next page from the remote api and save it.

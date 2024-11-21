@@ -3,4 +3,5 @@
 <resources>
     <string name="app_name">Just Dad Jokes</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="jokes_empty">Failed to retrieve any jokes</string>
 </resources>

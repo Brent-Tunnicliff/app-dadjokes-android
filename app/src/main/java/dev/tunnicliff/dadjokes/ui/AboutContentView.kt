@@ -3,8 +3,9 @@
 package dev.tunnicliff.dadjokes.ui
 
 import androidx.compose.runtime.Composable
+import dev.tunnicliff.ui.component.text.ThemedText
 
 @Composable
 fun AboutContentView() {
-    TODO("Not yet implemented")
+    ThemedText("")
 }

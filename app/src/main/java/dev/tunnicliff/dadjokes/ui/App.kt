@@ -25,7 +25,6 @@ import dev.tunnicliff.ui.theme.AppTheme
 import dev.tunnicliff.ui.theme.PreviewerTheme
 import dev.tunnicliff.ui.theme.ThemedPreviewer
 
-
 @Composable
 fun App() {
     val context = LocalContext.current
@@ -58,7 +57,7 @@ fun App() {
 
                     logsView(context)
 
-                    mainView()
+                    jokeView()
                 }
             }
         }

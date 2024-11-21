@@ -2,6 +2,7 @@
 
 package dev.tunnicliff.dadjokes.data.network
 
+import dev.tunnicliff.dadjokes.BuildConfig
 import dev.tunnicliff.network.RestService
 
 interface JokeRestService {
@@ -12,8 +13,9 @@ interface JokeRestService {
 class JokeRestServiceImpl(
     private val restService: RestService
 ) : JokeRestService {
-    companion object {
-        const val BASE_URL = "https://icanhazdadjoke.com"
+    private companion object {
+        const val USER_AGENT_HEADER = "User-Agent"
+        const val USER_AGENT_HEADER_VALUE = "app-dadjokes-android (${BuildConfig.REPO_LINK})"
     }
 
     override suspend fun getRandomJoke(): JokeDTO =
@@ -26,6 +28,9 @@ class JokeRestServiceImpl(
                 "page" to page.toString(),
                 "limit" to limit.toString()
             ),
-            ofType = JokePageDTO::class
+            ofType = JokePageDTO::class,
+            headers = mapOf(
+                USER_AGENT_HEADER to USER_AGENT_HEADER_VALUE
+            )
         )
 }
