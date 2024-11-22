@@ -17,7 +17,7 @@ android {
         minSdk = 33
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0.0"
+        versionName = "1.0.0-beta.1"
 
         buildConfigField(
             "String",
@@ -25,6 +25,7 @@ android {
             "\"https://github.com/Brent-Tunnicliff/app-dadjokes-android\""
         )
 
+        setProperty("archivesBaseName", "$applicationId-v$versionCode($versionName)")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
