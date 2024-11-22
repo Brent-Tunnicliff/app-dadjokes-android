@@ -17,21 +17,28 @@ import dev.tunnicliff.dadjokes.data.database.entity.JokePageWithJokes
 @Dao
 interface JokeDao {
     @Transaction
-    @Query("SELECT * FROM JokePageEntity ORDER BY id DESC LIMIT 1")
-    suspend fun getLastPage(): JokePageWithJokes?
-
-    @Transaction
     @Query("SELECT * FROM JokePageEntity WHERE id == :id")
     suspend fun getPage(id: Int): JokePageWithJokes?
+
+    @Transaction
+    @Query("SELECT * FROM DayEntity ORDER BY date DESC LIMIT :limit")
+    suspend fun getLastDays(limit: Int): List<DayWithJoke>
+
+    @Transaction
+    @Query("SELECT * FROM JokePageEntity ORDER BY id DESC LIMIT 1")
+    suspend fun getLastPage(): JokePageWithJokes?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertDayIfMissing(vararg entity: DayEntity)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertJokeIfMissing(vararg entity: JokeEntity)
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertJokePageIfMissing(vararg entity: JokePageEntity)
+
+    // The way the api works, we cannot guarantee that a joke will stay in the same page.
+    // So everytime we get a page lets update it locally in case the page has changed for
+    // when we next reuse that joke.
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOrReplaceJoke(vararg entity: JokeEntity)
 
     @Transaction
     @Query("SELECT * FROM DayEntity")
