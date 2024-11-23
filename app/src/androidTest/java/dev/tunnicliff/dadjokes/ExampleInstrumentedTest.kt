@@ -1,4 +1,6 @@
-package dev.tunnicliff.replace_me
+// Copyright © 2024 Brent Tunnicliff <brent@tunnicliff.dev>
+
+package dev.tunnicliff.dadjokes
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -17,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("dev.tunnicliff.replace_me", appContext.packageName)
+        assertEquals("dev.tunnicliff.dadjokes", appContext.packageName)
     }
 }

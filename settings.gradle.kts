@@ -1,3 +1,5 @@
+// Copyright © 2024 Brent Tunnicliff <brent@tunnicliff.dev>
+
 pluginManagement {
     repositories {
         google()
@@ -11,13 +13,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-
-        maven {
-            // Allows importing libs from GitHub.
-            url = uri("https://jitpack.io")
-        }
+        mavenLocal()
     }
 }
 
-rootProject.name = "REPLACE_ME"
+rootProject.name = "dadjokes"
 include(":app")

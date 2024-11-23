@@ -1,4 +1,8 @@
+<!-- Copyright © 2024 Brent Tunnicliff <brent@tunnicliff.dev> -->
+
 <resources>
-    <string name="app_name">REPLACE_ME</string>
+    <string name="app_name">Just Dad Jokes</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="jokes_empty">Failed to retrieve any jokes. This app uses internet to retrieve jokes. Click below to retry the download.</string>
+    <string name="jokes_empty_button">Retry</string>
 </resources>

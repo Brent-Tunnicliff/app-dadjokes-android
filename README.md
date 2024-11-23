@@ -1,8 +1,11 @@
-# template-app-android
+# Just Dad Jokes
 
-Template as a base for all my Android apps.
+Application to get and display dad jokes from https://icanhazdadjoke.com/api.
 
-After generating the repository find all cases of `REPLACE_ME`/`replace_me` and rename them.
+## Firebase
+
+This project uses Firebase, but the `google-services.json` file has been left out of git.
+The file needs to be placed within the `app/` directory.
 
 ## App signing
 

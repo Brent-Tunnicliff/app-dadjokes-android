@@ -1,4 +1,6 @@
-package dev.tunnicliff.replace_me
+// Copyright © 2024 Brent Tunnicliff <brent@tunnicliff.dev>
+
+package dev.tunnicliff.dadjokes
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
