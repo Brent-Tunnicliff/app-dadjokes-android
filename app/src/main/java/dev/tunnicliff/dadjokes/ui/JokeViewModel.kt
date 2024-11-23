@@ -9,6 +9,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dev.tunnicliff.dadjokes.data.database.entity.DayWithJoke
 import dev.tunnicliff.dadjokes.data.database.entity.JokeEntity
+import dev.tunnicliff.logging.LOG
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,6 +23,10 @@ abstract class JokeViewModel : ViewModel() {
 class DefaultJokeViewModel(
     private val pager: Pager<Int, DayWithJoke>
 ) : JokeViewModel() {
+    private companion object {
+        const val TAG = "DefaultJokeViewModel"
+    }
+    
     override val jokesState: StateFlow<PagingData<DayWithJoke>>
         get() = _jokesState.asStateFlow()
 
@@ -29,6 +34,7 @@ class DefaultJokeViewModel(
         MutableStateFlow(value = PagingData.empty())
 
     override fun viewCreated() {
+        LOG.info(tag = TAG, message = "View created")
         viewModelScope.launch {
             pager
                 .flow

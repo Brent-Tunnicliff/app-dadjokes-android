@@ -13,7 +13,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.logEvent
 import dev.tunnicliff.dadjokes.BuildConfig
+import dev.tunnicliff.dadjokes.MainApplication
 import dev.tunnicliff.dadjokes.R
 import dev.tunnicliff.logging.view.logsView
 import dev.tunnicliff.logging.view.navigateToLogsView
@@ -25,11 +28,23 @@ import dev.tunnicliff.ui.theme.AppTheme
 import dev.tunnicliff.ui.theme.PreviewerTheme
 import dev.tunnicliff.ui.theme.ThemedPreviewer
 
+private const val SCREEN_VIEW_LABEL = "label"
+
 @Composable
 fun App() {
     val context = LocalContext.current
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val container = (context.applicationContext as MainApplication).container
+
+    navController.addOnDestinationChangedListener { _, navDestination, _ ->
+        container.analytics().logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, navDestination.route ?: "null")
+            navDestination.label?.let {
+                param(SCREEN_VIEW_LABEL, it.toString())
+            }
+        }
+    }
 
     AppTheme {
         Scaffold(topBar = {

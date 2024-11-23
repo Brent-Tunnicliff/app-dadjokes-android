@@ -10,6 +10,9 @@ devTunnicliffLibLoggingAndroid = "1.0.0-beta.7"
 devTunnicliffLibNetworkAndroid = "0.1.0-alpha.8"
 devTunnicliffLibUiAndroid = "0.1.0-alpha.8"
 espressoCore = "3.6.1"
+googleFirebaseBom = "33.6.0"
+googleFirebaseCrashlyticsPlugin = "3.0.2"
+googleServices = "4.4.2"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 kotlinAndroid = "1.9.22"
@@ -55,13 +58,19 @@ dev-tunnicliff-lib-container-android = { module = "dev.tunnicliff:lib-container-
 dev-tunnicliff-lib-logging-android = { module = "dev.tunnicliff:lib-logging-android", version.ref = "devTunnicliffLibLoggingAndroid" }
 dev-tunnicliff-lib-network-android = { module = "dev.tunnicliff:lib-network-android", version.ref = "devTunnicliffLibNetworkAndroid" }
 dev-tunnicliff-lib-ui-android = { module = "dev.tunnicliff:lib-ui-android", version.ref = "devTunnicliffLibUiAndroid" }
+google-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "googleFirebaseBom" }
+google-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+google-firebase-perf = { module = "com.google.firebase:firebase-perf" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 junit = { module = "junit:junit", version.ref = "junit" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 
 [plugins]
-androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAndroid" }
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlyticsPlugin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAndroid" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "roomPlugin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinAndroid" }

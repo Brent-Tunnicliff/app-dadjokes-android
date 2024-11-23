@@ -14,8 +14,14 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.google.firebase.Firebase
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.analytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.crashlytics.crashlytics
 import dev.tunnicliff.container.Container
 import dev.tunnicliff.dadjokes.data.DayWithJokeRemoteMediator
+import dev.tunnicliff.dadjokes.data.DefaultLogUploadHandler
 import dev.tunnicliff.dadjokes.data.database.JokeDatabase
 import dev.tunnicliff.dadjokes.data.database.entity.DayWithJoke
 import dev.tunnicliff.dadjokes.data.network.JokeRestService
@@ -26,7 +32,6 @@ import dev.tunnicliff.logging.LOG
 import dev.tunnicliff.logging.LoggingContainer
 import dev.tunnicliff.logging.logger.LogUploadHandler
 import dev.tunnicliff.logging.logger.LoggingConfigurationManager
-import dev.tunnicliff.logging.model.LogLevel
 import dev.tunnicliff.network.NetworkContainer
 import java.net.URL
 import kotlin.reflect.KClass
@@ -75,6 +80,14 @@ class AppContainer(
 
     // region Internal
 
+    fun analytics(): FirebaseAnalytics = resolveSingleton {
+        Firebase.analytics
+    }
+
+    fun crashlytics(): FirebaseCrashlytics = resolveSingleton {
+        Firebase.crashlytics
+    }
+
     fun loggingConfigurationManager(): LoggingConfigurationManager =
         loggingContainer.loggingConfigurationManager()
 
@@ -121,17 +134,10 @@ class AppContainer(
     }
 
     private fun uploadHandler(): LogUploadHandler = resolveSingleton {
-        object : LogUploadHandler {
-            override suspend fun uploadLog(
-                level: LogLevel,
-                tag: String,
-                message: String,
-                throwable: Throwable?
-            ): Boolean {
-                // TODO: implement the log uploading.
-                return false
-            }
-        }
+        DefaultLogUploadHandler(
+            analytics = analytics(),
+            crashlytics = crashlytics()
+        )
     }
 
     // endregion

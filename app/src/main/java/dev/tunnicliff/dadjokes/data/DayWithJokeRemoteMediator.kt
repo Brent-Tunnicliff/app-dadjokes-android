@@ -49,6 +49,7 @@ class DayWithJokeRemoteMediator(
         state: PagingState<Int, DayWithJoke>
     ): MediatorResult =
         try {
+            LOG.info(tag = TAG, message = "Loading $loadType started")
             val result = when (loadType) {
                 LoadType.APPEND -> loadNextPage(state)
                 LoadType.PREPEND -> loadPreviousPage(state)
@@ -56,17 +57,28 @@ class DayWithJokeRemoteMediator(
                 LoadType.REFRESH -> MediatorResult.Success(endOfPaginationReached = false)
             }
 
+            LOG.info(tag = TAG, message = "Loading $loadType completed")
             result
         } catch (exception: IOException) {
+            LOG.error(
+                tag = TAG,
+                message = "Loading $loadType threw IOException",
+                throwable = exception
+            )
             MediatorResult.Error(exception)
         } catch (exception: HttpException) {
+            LOG.error(
+                tag = TAG,
+                message = "Loading $loadType threw HttpException",
+                throwable = exception
+            )
             MediatorResult.Error(exception)
         }
 
     private suspend fun loadNextPage(state: PagingState<Int, DayWithJoke>): MediatorResult {
-        state.anchorPosition
         val page = (state.lastItemOrNull()?.joke?.page ?: 0) + 1
         val limit = state.config.pageSize
+        LOG.info(tag = TAG, message = "Loading next page $page, with limit $limit")
         savePageToDatabase(page = page, limit = limit)
         return MediatorResult.Success(
             // We will keep generating new days forward reusing jokes, so should not have any limit.
@@ -78,7 +90,9 @@ class DayWithJokeRemoteMediator(
         val pageNumber = (state.firstItemOrNull()?.joke?.page ?: 0) - 1
         val limit = state.config.pageSize
 
+        LOG.info(tag = TAG, message = "Loading previous page $pageNumber, with limit $limit")
         if (pageNumber < 1) {
+            LOG.info(tag = TAG, message = "Skipping loading previous page")
             return MediatorResult.Success(
                 endOfPaginationReached = true
             )
@@ -129,7 +143,7 @@ class DayWithJokeRemoteMediator(
         if (storedTotalPages < page.totalPages) {
             LOG.info(
                 tag = TAG,
-                message = "storing new total pages: ${page.totalPages}"
+                message = "storing new total pages ${page.totalPages}, previously $storedTotalPages"
             )
             dataStore.edit { preferences ->
                 preferences[PREFERENCE_TOTAL_PAGES] = page.totalPages
@@ -143,6 +157,7 @@ class DayWithJokeRemoteMediator(
         dataStore.data.map { it[PREFERENCE_TOTAL_PAGES] ?: 0 }.first()
 
     private suspend fun savePageToDatabase(page: Int, limit: Int) {
+        LOG.info(tag = TAG, message = "Saving to database page $page, with limit $limit")
         val totalPages = getStoredTotalPages()
         val jokePageNumber: Int = if (totalPages == 0 || page <= totalPages) {
             page
@@ -167,6 +182,8 @@ class DayWithJokeRemoteMediator(
             !previousDays.map { it.joke }.contains(joke)
         }
 
+        LOG.info(tag = TAG, message = "Number of new jokes ${newJokes.size} of ${jokes.size}")
+
         val days = newJokes.withIndex().map { indexedJoke ->
             val day = daysFromFirst + indexedJoke.index
             DayEntity(
@@ -174,6 +191,11 @@ class DayWithJokeRemoteMediator(
                 jokeId = indexedJoke.value.id
             )
         }.toTypedArray()
+
+        LOG.info(
+            tag = TAG,
+            message = "Saving days ${days.joinToString { "${it.date}=${it.jokeId}" }}"
+        )
 
         jokeDatabase.withTransaction {
             with(jokeDatabase.jokeDao()) {

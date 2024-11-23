@@ -23,6 +23,10 @@ class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        // TODO: Build analytics consent system.
+        container.crashlytics().isCrashlyticsCollectionEnabled = true
+        container.analytics().setAnalyticsCollectionEnabled(true)
+
         applicationScope.launch {
             with(container.loggingConfigurationManager()) {
                 deleteOldLogs()

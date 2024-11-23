@@ -20,6 +20,13 @@
 # hide the original source file name.
 -renamesourcefileattribute SourceFile
 
+# Room database
 -keep class * extends androidx.room.RoomDatabase
 -keep @androidx.room.Entity class *
 -dontwarn androidx.room.paging.**
+
+# Keep custom exceptions
+-keep public class * extends java.lang.Exception
+
+# Was suggessted to add this by the build output after adding Firebase.
+-dontwarn org.slf4j.impl.StaticLoggerBinder

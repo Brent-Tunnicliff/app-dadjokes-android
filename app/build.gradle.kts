@@ -1,8 +1,10 @@
 // Copyright © 2024 Brent Tunnicliff <brent@tunnicliff.dev>
 
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.google.firebase.crashlytics)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.serialization)
@@ -17,7 +19,7 @@ android {
         minSdk = 33
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0.0-beta.1"
+        versionName = "1.0.0-beta.2"
 
         buildConfigField(
             "String",
@@ -34,7 +36,9 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -92,6 +96,10 @@ dependencies {
     implementation(libs.dev.tunnicliff.lib.logging.android)
     implementation(libs.dev.tunnicliff.lib.network.android)
     implementation(libs.dev.tunnicliff.lib.ui.android)
+    implementation(libs.google.firebase.analytics)
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.google.firebase.crashlytics)
+    implementation(libs.google.firebase.perf)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.material)
 
