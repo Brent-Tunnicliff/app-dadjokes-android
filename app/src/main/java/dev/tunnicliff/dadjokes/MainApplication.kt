@@ -5,6 +5,8 @@ package dev.tunnicliff.dadjokes
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.Firebase
+import com.google.firebase.perf.performance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -26,6 +28,7 @@ class MainApplication : Application() {
         // TODO: Build analytics consent system.
         container.crashlytics().isCrashlyticsCollectionEnabled = true
         container.analytics().setAnalyticsCollectionEnabled(true)
+        Firebase.performance.isPerformanceCollectionEnabled = true
 
         applicationScope.launch {
             with(container.loggingConfigurationManager()) {
