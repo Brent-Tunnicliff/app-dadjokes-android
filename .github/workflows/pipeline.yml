@@ -10,6 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: Brent-Tunnicliff/action-setup-android@v1
+      - uses: Brent-Tunnicliff/action-setup-android@v1.1.0-alpha
+        with:
+          google_services_json_value: ${{ secrets.GOOGLE_SERVICES_JSON }}
       - uses: Brent-Tunnicliff/action-build-and-test-android@v1
       - uses: Brent-Tunnicliff/action-publish-app-android@v1
