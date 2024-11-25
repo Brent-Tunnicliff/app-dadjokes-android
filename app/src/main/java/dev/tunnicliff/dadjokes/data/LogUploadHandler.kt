@@ -28,6 +28,7 @@ class DefaultLogUploadHandler(
             crashlytics.recordException(it)
         }
 
+        // TODO: After this is live for a while, decide if this naming is useful or not.
         analytics.logEvent("log-$tag-$level") {
             param(MESSAGE_PARAM, message)
             throwable?.let {

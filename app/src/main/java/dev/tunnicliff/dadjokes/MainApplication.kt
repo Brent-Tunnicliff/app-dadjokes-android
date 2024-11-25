@@ -7,6 +7,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.Firebase
 import com.google.firebase.perf.performance
+import dev.tunnicliff.logging.model.LogUploadPermission
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -33,6 +34,9 @@ class MainApplication : Application() {
         applicationScope.launch {
             with(container.loggingConfigurationManager()) {
                 deleteOldLogs()
+
+                // TODO: Build log upload permission flow.
+                setUploadPermission(LogUploadPermission.ALLOWED)
             }
         }
     }
